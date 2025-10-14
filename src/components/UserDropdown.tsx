@@ -16,7 +16,7 @@ const UserDropdown = () => {
     return (
       <DropdownMenu >
           <DropdownMenuTrigger asChild  >
-              <div   className='flex items-center gap-2 text-gray-400 hover:text-yellow-500 hover:hover:bg-transparent '>
+              <Button   className='flex items-center gap-2 text-gray-400 bg-gray-800 hover:text-yellow-500 hover:hover:bg-transparent '>
                   <Avatar className="h-8 w-8">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold">
@@ -27,13 +27,13 @@ const UserDropdown = () => {
                       {user.name}
 
                   </p>
-              </div>
+              </Button>
 
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="text-gray-400 bg-transparent ">
+          <DropdownMenuContent className="text-gray-400  bg-gray-700 border-0">
               <DropdownMenuLabel>
-                  <Button variant='ghost' className="flex relative items-center gap-2 py-2">
+                  <div className="flex relative items-center gap-2 py-2">
                       <Avatar className="h-10 w-10">
                           <AvatarImage src="https://github.com/shadcn.png" />
                           <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold">
@@ -51,7 +51,7 @@ const UserDropdown = () => {
                           </p>
                       </div>
 
-                  </Button>
+                  </div>
               </DropdownMenuLabel>
            <DropdownMenuSeparator className="bg-gray-600"/>
               <DropdownMenuItem  onClick={handleSignOut} className="text-gray-100 text-md font-medium hover:text-yellow-500 focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
