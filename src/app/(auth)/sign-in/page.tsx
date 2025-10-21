@@ -22,7 +22,7 @@ const page = () => {
 }
   })
 
-  const onSubmit: SubmitHandler<SignInFormData> = (data) => async (data : SignUpFormData)  => {
+  const onSubmit: SubmitHandler<SignInFormData> = (data) => async (data : SignInFormData)  => {
     try {
       console.log(data)
     }catch (error) {
