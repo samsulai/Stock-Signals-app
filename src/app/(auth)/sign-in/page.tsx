@@ -7,8 +7,16 @@ import InputFields from '@/components/forms/InputFields';
 
 
 import FooterLink from "@/components/forms/FooterLink";
+import {redirect, useRouter} from 'next/navigation';
+import {auth} from "@/lib/auth";
 
-const page = () => {
+import {showErrorToast} from "@/lib/toastHandler";
+import {signInWithEmail} from "@/lib/actions/auth.actions";
+
+
+const page =  () => {
+
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -22,11 +30,13 @@ const page = () => {
 }
   })
 
-  const onSubmit: SubmitHandler<SignInFormData> = (data) => async (data : SignInFormData)  => {
+  const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
     try {
-      console.log(data)
-    }catch (error) {
-console.error(error)
+      const result = await signInWithEmail(data)
+      if(result.success) router.push('/');
+    } catch (error) {
+      console.error(error)
+      showErrorToast('Sign Ip failed', error)
     }
   }
   return (

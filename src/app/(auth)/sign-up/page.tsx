@@ -1,5 +1,6 @@
 "use client"
 import React from 'react'
+import { toast } from "sonner"
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Button } from "@/components/ui/button";
 import InputFields from '@/components/forms/InputFields';
@@ -7,7 +8,11 @@ import SelectField from '@/components/forms/SelectField';
 import {INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS} from "@/lib/constants";
 import {CountrySelectField} from "@/components/forms/CountrySelectField";
 import FooterLink from "@/components/forms/FooterLink";
+import {signUpWithEmail} from "@/lib/actions/auth.actions";
+import {useRouter} from "next/navigation";
+import {showErrorToast} from "@/lib/toastHandler";
 const page = () => {
+    const router = useRouter()
     const {
         register,
         handleSubmit,
@@ -25,13 +30,17 @@ const page = () => {
         },  mode: 'onBlur'
     })
 
-    const onSubmit: SubmitHandler<SignUpFormData> = (data) => async (data : SignUpFormData)  => {
+
+    const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
         try {
-            console.log(data)
-        }catch (error) {
+            const result = await signUpWithEmail(data)
+            if(result.success) router.push('/');
+        } catch (error) {
             console.error(error)
+            showErrorToast('Sign Up failed', error)
         }
     }
+
     return (
         <>
             <h1 className="form-title">Sign Up & Personalize</h1>

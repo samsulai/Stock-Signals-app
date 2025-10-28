@@ -6,13 +6,24 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { LogOut } from 'lucide-react';
 import NavItem from "@/components/NavItem";
-const UserDropdown = () => {
+import { signOut } from '@/lib/actions/auth.actions';
+type User = {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+};
+const UserDropdown = ({user} : {user : User}) => {
   const router = useRouter()
-    const handleSignOut = () => {
+    const handleSignOut = async () => {
+        try {
 
-        router.push('/sign-in')
+            await signOut({ redirect: false })
+            router.push('/sign-in')
+        } catch (err) {
+            console.error('Sign out failed', err)
+        }
     }
-    const user = {name : 'John Doe', email : 'hello@johndoe'}
+
     return (
       <DropdownMenu >
           <DropdownMenuTrigger asChild  >
@@ -20,7 +31,7 @@ const UserDropdown = () => {
                   <Avatar className="h-8 w-8">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold">
-                          {user.name[0]}
+                          {user.name}
                       </AvatarFallback>
                   </Avatar>
                   <p className='font-medium text-base hidden sm:flex flex-col'>
@@ -37,7 +48,7 @@ const UserDropdown = () => {
                       <Avatar className="h-10 w-10">
                           <AvatarImage src="https://github.com/shadcn.png" />
                           <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold">
-                              {user.name[0]}
+                              {user.name}
                           </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col items-start">
