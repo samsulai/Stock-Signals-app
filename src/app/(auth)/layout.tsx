@@ -2,12 +2,19 @@ import React from "react";
 
 import Image from 'next/image'
 import Link from "next/link";
+import {auth} from "@/lib/auth";
+import {headers} from "next/headers";
+import {redirect} from "next/navigation";
 
-export default function RootLayout({
+export default async function RootLayout({
                                        children,
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const session  = await auth.api.getSession({ headers: await headers() });
+    if (session?.user) {
+        return redirect('/');
+    }
     return (
         <main className="auth-layout">
             <section className="auth-left-section scrollbar-hide-default">
