@@ -73,6 +73,13 @@ declare global {
         email: string;
     };
 
+    // Minimal user shape used for sending news emails
+    type UserForNewsEmail = {
+        id: string;
+        email: string;
+        name: string;
+    };
+
     type Stock = {
         symbol: string;
         name: string;
